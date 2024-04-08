@@ -113,3 +113,31 @@ app.use((err, req, res, next) => {
 //     allowed_formats: ['jpg', 'png', 'jpeg']
 //   }
 // });
+
+// module.exports.loggedIn = (req, res, next) => {
+//     if (!req.isAuthenticated()) {
+//         req.flash('error', 'LogIn into your account to proceed')
+//         req.session.redirectUrl = req.originalUrl;
+//         return res.redirect('/signin')
+//     }
+//     next()
+// };
+
+// module.exports.ownerListing = async (req, res, next) => {
+//     try {
+//         const { id } = req.params;
+//         const listing = await Listing.findById(id);
+//         if (!listing) {
+//             req.flash("error", "Listing not found");
+//             return res.redirect("/listings");
+//         }
+//         if (!listing.user.equals(req.user._id)) {
+//             req.flash("error", "You are not the owner of this listing");
+//             return res.redirect(`/listings/${id}`);
+//         }
+//         next();
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send("Internal Server Error");
+//     }
+// };
