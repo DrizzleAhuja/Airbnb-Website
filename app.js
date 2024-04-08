@@ -97,3 +97,19 @@ app.use((err, req, res, next) => {
     let { status = 500, message = 'Something went wrong!' } = err;
     res.status(status).render('error.ejs', { message });
 });
+
+// // Configure cloudinary
+// cloudinary.config({
+//   cloud_name: process.env.CLOUD_NAME,
+//   api_key: process.env.CLOUD_API_KEY,
+//   api_secret: process.env.CLOUD_API_SECRET
+// });
+
+// // Set up multer storage with cloudinary
+// const storage = new CloudinaryStorage({
+//   cloudinary: cloudinary,
+//   params: {
+//     folder: 'wanderlust_DEV',
+//     allowed_formats: ['jpg', 'png', 'jpeg']
+//   }
+// });
