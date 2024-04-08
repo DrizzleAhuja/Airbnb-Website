@@ -97,22 +97,3 @@ app.use((err, req, res, next) => {
     let { status = 500, message = 'Something went wrong!' } = err;
     res.status(status).render('error.ejs', { message });
 });
-// -------:\Users\drizz\OneDrive\Documents\NODEJS_FULL\Airbnb Website\node_modules\@mapbox\mapbox-sdk\lib\classes\mapi-client.js:25
-//     throw new Error('Cannot create a client without an access token');
-//     ^
-
-// Error: Cannot create a client without an access token
-//     at NodeClient.MapiClient (C:\Users\drizz\OneDrive\Documents\NODEJS_FULL\Airbnb Website\node_modules\@mapbox\mapbox-sdk\lib\classes\mapi-client.js:25:11)
-//     at new NodeClient (C:\Users\drizz\OneDrive\Documents\NODEJS_FULL\Airbnb Website\node_modules\@mapbox\mapbox-sdk\lib\node\node-client.js:7:14)
-//     at createNodeClient (C:\Users\drizz\OneDrive\Documents\NODEJS_FULL\Airbnb Website\node_modules\@mapbox\mapbox-sdk\lib\node\node-client.js:24:10)
-//     at C:\Users\drizz\OneDrive\Documents\NODEJS_FULL\Airbnb Website\node_modules\@mapbox\mapbox-sdk\services\service-helpers\create-service-factory.js:13:16
-//     at Object.<anonymous> (C:\Users\drizz\OneDrive\Documents\NODEJS_FULL\Airbnb Website\controllers\listings.js:6:25)
-//     at Module._compile (node:internal/modules/cjs/loader:1378:14)
-//     at Module._extensions..js (node:internal/modules/cjs/loader:1437:10)
-//     at Module.load (node:internal/modules/cjs/loader:1212:32)
-//     at Module._load (node:internal/modules/cjs/loader:1028:12)
-//     at Module.require (node:internal/modules/cjs/loader:1237:19)
-
-// Node.js v21.6.1
-// [nodemon] app crashed - waiting for file changes before starting...
-// -------correct code
