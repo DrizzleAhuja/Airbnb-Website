@@ -1,0 +1,21 @@
+<% layout('boilerplate.ejs') %>
+    <form method="post" action="/signin" class="needs-validation" novalidate>
+        <div class="col col-lg-10 mt-3 mb-3 offset-3 newcss">
+            <h2>LogIn Into Your Account</h2>
+            <p>
+            <h5>Username:</h5>
+            <label>
+                <input type="text" name="username" class="form-control" required>
+                <div class="invalid-feedback">Please enter the username.</div>
+            </label>
+            </p>
+            <p>
+            <h5>Password:</h5>
+            <label>
+                <input type="password" name="password" class="form-control" required>
+                <div class="invalid-feedback">Please enter the password</div>
+            </label>
+            </p>
+            <button class="btn btn-primary" type="submit">LogIn</button>
+        </div>
+    </form>

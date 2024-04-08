@@ -1,0 +1,127 @@
+<% layout('boilerplate.ejs') %>
+    <div class="col col-lg-8 offset-3 mt-2 mb-3 showcss">
+        <h2>
+            <%= a.title %>
+        </h2><br>
+        <div><img src="<%= a.image.url %>" alt="listingsview" class="imagelisting"></div>
+        <p>
+        <h5>Description:</h5>
+        <%= a.description %>
+            </p>
+            <p>
+            <h5>Price:</h5>
+            &#8377;<%= a.price %>
+                </p>
+                <p>
+                <h5>Owner:</h5>
+                <%= ownerUsername %>
+                    </p>
+                    <p>
+                    <p>
+                    <h5>Location:</h5>
+                    <%= a.location %>
+                        </p>
+                        <p>
+                        <h5>Country:</h5>
+                        <%= a.country %>
+                            </p>
+                            <div class="row row-cols-lg-2">
+                                <div class="d-flex">
+                                    <a href="/listings/<%=a._id%>/edit" class="me-2"><button
+                                            class="btn btn-dark">EDIT</button></a>
+                                    <form method="post" action="/listings/<%=a._id%>?_method=DELETE">
+                                        <button class="btn btn-danger">DELETE</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="d-grid">
+                                <hr>
+                                <h3>Leave a Review</h3>
+                                <h4>Rating</h4>
+                                <form method="post" action="/listings/<%=a._id%>/review" class="needs-validation"
+                                    novalidate>
+                                    <fieldset class="starability-slot">
+                                        <!-- Radio inputs for rating -->
+                                        <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="1"
+                                            checked aria-label="No rating." />
+                                        <input type="radio" id="first-rate1" name="rating" value="1" />
+                                        <label for="first-rate1" title="Terrible">1 star</label>
+                                        <input type="radio" id="first-rate2" name="rating" value="2" />
+                                        <label for="first-rate2" title="Not good">2 stars</label>
+                                        <input type="radio" id="first-rate3" name="rating" value="3" />
+                                        <label for="first-rate3" title="Average">3 stars</label>
+                                        <input type="radio" id="first-rate4" name="rating" value="4" />
+                                        <label for="first-rate4" title="Very good">4 stars</label>
+                                        <input type="radio" id="first-rate5" name="rating" value="5" />
+                                        <label for="first-rate5" title="Amazing">5 stars</label>
+                                    </fieldset>
+                                    <!-- Comments -->
+                                    <div class="d-grid">
+                                        <p>
+                                        <h5>Comments</h5>
+                                        <textarea rows="3" name="comment" class="form-control"
+                                            placeholder="Enter comment" style="width:60%" required></textarea>
+                                        <div class="invalid-feedback">Please enter a comment.</div>
+                                        </p>
+                                    </div>
+                                    <button class="btn btn-outline-success">Submit</button>
+                                </form>
+                            </div><br>
+                            <div class="row row-cols-lg-2 g-1">
+                                <% if(a.reviews && a.reviews.length> 0) { %>
+                                    <% a.reviews.forEach(review=> { %>
+                                        <div class="row row-cols-lg-2">
+                                            <div class="card mb-3" style="height: 30vh; width: 30vh">
+                                                <div class="card-body">
+                                                    <p class="card-text">
+                                                    <h5 class="card-title">
+                                                        <%= review.comment %>
+                                                    </h5>
+                                                    <p class="starability-result" data-rating="<%= review.rating %>">
+                                                    </p>
+                                                    <p>
+                                                    <p style="font-size:large;"><u>Reviewed By:</u>
+                                                        <b>
+                                                            <%= review.user && review.user.username ?
+                                                                review.user.username : 'Unknown' %>
+                                                        </b>
+                                                    </p>
+                                                    </p>
+                                                    </p>
+                                                    <form method="post"
+                                                        action="/listings/<%= a._id %>/review/<%= review._id %>?_method=DELETE">
+                                                        <button class="btn btn-danger">DELETE</button>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }) %>
+                                            <% } %>
+                            </div>
+                            <hr>
+                            <h2>Where you'll be <i class="fa-solid fa-compass fa-spin"
+                                    style="color: red; font-size: 3vw;"></i></h2><br>
+                            <div id="map" style="width: 100%; height: 60vh; border-radius:1.5vw">a</div>
+                            <script>
+                                mapboxgl.accessToken = '<%- process.env.MAP_TOKEN %>';
+                                const coordinates = JSON.parse('<%- JSON.stringify(a.geometry.coordinates) %>');
+                                const locationName = '<%- a.location %>'; // Add this line to define the locationName
+                                const map = new mapboxgl.Map({
+                                    container: 'map',
+                                    style: 'mapbox://styles/mapbox/streets-v12',
+                                    center: coordinates,
+                                    zoom: 8
+                                });
+
+                                // Add zoom and rotation controls to the map.
+                                map.addControl(new mapboxgl.NavigationControl());
+
+                                new mapboxgl.Marker({ color: 'red' })
+                                    .setLngLat(coordinates).setPopup(
+                                        new mapboxgl.Popup({ offset: 25 }).setHTML(
+                                            `<h3><b>${locationName}</b></h3><h5>Exact location will be provided after booking</h5>` // Use locationName here
+                                        )
+                                    )
+                                    .addTo(map);
+                            </script>

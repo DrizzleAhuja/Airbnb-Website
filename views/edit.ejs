@@ -1,0 +1,61 @@
+<% layout('boilerplate.ejs') %>
+    <form method="post" action="/listings/<%= a._id %>/edit?_method=PUT" class="needs-validation" novalidate
+        enctype="multipart/form-data">
+        <div class="col col-lg-10 mt-3 mb-3 offset-3 newcss">
+            <h2>CREATE A NEW LISTING</h2>
+            <p>
+            <h5>Title:</h5>
+            <label>
+                <input type="text" name="title" value="<%=a.title%>" class="form-control" required>
+                <div class="invalid-feedback">Please enter a title.</div>
+            </label>
+            </p>
+            <p>
+            <h5>Description:</h5>
+            <textarea row="3" name="description" class="form-control" placeholder="Enter description" style="width:50%"
+                required><%=a.description%></textarea>
+            <div class="invalid-feedback">Please enter a description.</div>
+            </p>
+            <p>
+            <h5>Current Image:</h5><br>
+            <div><img src="<%= a.image.url %>" alt="listingview" class="imagelisting" style="height:40vh; width:40vw;">
+            </div>
+            </p>
+            <p>
+            <h5>Update the Image:</h5>
+            <label>
+                <input type="file" name="listingImage" class="form-control" required>
+                <div class="invalid-feedback">Please provide a valid image.</div>
+            </label>
+            </p>
+            <p>
+            <h5>Category:</h5>
+            <label>
+                <input type="name" name="category" value="<%= a.category %>" class="form-control" required>
+                <div class="invalid-feedback">Please enter a valid category</div>
+            </label>
+            </p>
+            <p>
+            <h5>Price:</h5>
+            <label>
+                <input type="number" name="price" value="<%= a.price %>" class="form-control" required>
+                <div class="invalid-feedback">Please enter a valid price.</div>
+            </label>
+            </p>
+            <p>
+            <h5>Country:</h5>
+            <label>
+                <input type="name" name="country" value="<%= a.country%>" class="form-control" required>
+                <div class="invalid-feedback">Please enter a valid country.</div>
+            </label>
+            </p>
+            <p>
+            <h5>Location:</h5>
+            <label>
+                <input type="name" name="location" value="<%= a.location%>" class="form-control" required>
+                <div class="invalid-feedback">Please enter a valid location.</div>
+            </label>
+            </p>
+            <button class="btn btn-primary" type="submit">ADD</button>
+        </div>
+    </form>

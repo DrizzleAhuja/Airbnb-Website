@@ -1,0 +1,151 @@
+<% layout('boilerplate.ejs') %>
+    <style>
+        @media screen and (max-width: 768px) {
+            .d-flex.row {
+                overflow-x: hidden;
+            }
+
+            .d-flex.row .col {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .formcss3 {
+                display: inline-block !important;
+                width: auto !important;
+                height: auto !important;
+            }
+
+            .formcss4 {
+                font-size: 3vw;
+            }
+        }
+    </style>
+    <div style="padding:2.5vw; margin:1vw;">
+        <div class="d-flex row">
+            <div class="row">
+                <div class="col d-flex gap-5 me-5">
+                    <a href="/listings" class="text-decoration-none text-dark">
+                        <div style="text-align: center;">
+                            <i class="fa-solid fa-house" style="font-size: large;"></i>
+                            <p style="font-size: large;">ALL</p>
+                        </div>
+                    </a>
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div style="text-align: center;">
+                            <i class="fa-solid fa-landmark" style="font-size: large;"></i>
+                            <p style="font-size: large;">Rooms</p>
+                        </div>
+                    </a>
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div style="text-align: center;">
+                            <i class="fa-solid fa-city" style="font-size: large;"></i>
+                            <p style="font-size: large;"><I>Cities</I></p>
+                        </div>
+                    </a>
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div style="text-align: center;">
+                            <i class="fa-solid fa-monument" style="font-size: large;"></i>
+                            <p style="font-size: large;">Castles</p>
+                        </div>
+                    </a>
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div style="text-align: center;">
+                            <i class="fa-solid fa-mountain" style="font-size: large;"></i>
+                            <p style="font-size: large;">Camping</p>
+                        </div>
+                    </a>
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div style="text-align: center;">
+                            <i class="fa-solid fa-mountain-city" style="font-size: large;"></i>
+                            <p style="font-size: large;">Mountains</p>
+                        </div>
+                    </a>
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div style="text-align: center;">
+                            <i class="fa-solid fa-tree" style="font-size: large;"></i>
+                            <p style="font-size: large;">Nature</p>
+                        </div>
+                    </a>
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div style="text-align: center;">
+                            <i class="fa-solid fa-road-spikes" style="font-size: large;"></i>
+                            <p style="font-size: large;">Farms</p>
+                        </div>
+                    </a>
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div style="text-align: center;">
+                            <i class="fa-solid fa-mountain-sun" style="font-size: large;"></i>
+                            <p style="font-size: large;">Hills</p>
+                        </div>
+                    </a>
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div style="text-align: center;">
+                            <i class="fa-solid fa-ship" style="font-size: large;"></i>
+                            <p style="font-size: large;">Boats</p>
+                        </div>
+                    </a>
+                    <a href="#" class="text-decoration-none text-dark">
+                        <div style="text-align: center;">
+                            <i class="fa-solid fa-hotel" style="font-size: large;"></i>
+                            <p style="font-size: large;">Hotels</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col ms-5" style=" border-radius: 2vw; text-align: center;">
+                    <div class="form-check-reverse form-switch form-label  formcss3"
+                        style="width:15vw; height:8vh; font-size: 1.4vw; text-align: center; color: black">
+                        <input class="form-check-input formcss4" type="checkbox" role="switch"
+                            id="flexSwitchCheckDefault" style="margin-right: -1rem !important;">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">
+                            <h4>Display Taxes</h4>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-lg-3 mt-3 mb-3">
+            <% for(const i of a) { %>
+                <div class="col">
+                    <a href="/listings/<%= i._id %>" style="text-decoration: none;">
+                        <div class="card mb-3" style="height: 50vh;">
+                            <img src="<%= i.image.url %>" class="card-img-top" alt="listing image"
+                                style="height: 70%; width: auto; max-width: 100%;">
+                            <div class="card-body">
+                                <h5 class="card-title" style="font-size: 1.5rem;">
+                                    <%= i.title %>
+                                </h5>
+                                <p class="card-text price-info" style="font-size: 1.2rem;" data-price="<%= i.price %>">
+                                    &#8377;<%= i.price ? i.price.toLocaleString('en-IN') + ' / night'
+                                        : 'Price not available' %>
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <% } %>
+        </div>
+    </div>
+    <script>
+        let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+
+        taxSwitch.addEventListener("change", () => {
+            updatePriceDisplay(taxSwitch.checked);
+        });
+
+        function updatePriceDisplay(isTaxSwitchOn) {
+            let priceInfoElements = document.querySelectorAll(".price-info");
+
+            priceInfoElements.forEach((priceInfo) => {
+                let price = parseFloat(priceInfo.getAttribute("data-price"));
+                if (!isNaN(price)) {
+                    let formattedPrice = `&#8377; ${price.toLocaleString("en-IN")} / night`;
+                    if (isTaxSwitchOn) {
+                        formattedPrice += `&nbsp;+ 18% GST`;
+                    }
+                    priceInfo.innerHTML = formattedPrice;
+                }
+            });
+        }
+    </script>
